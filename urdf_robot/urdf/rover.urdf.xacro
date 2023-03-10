@@ -59,7 +59,7 @@
         <box size="0.5 0.43 0.02"/>
       </geometry>
     </collision>
-    <xacro:inertial_box mass="20" x="0.5" y="0.43" z="0.02">
+    <xacro:inertial_box mass="5" x="0.5" y="0.43" z="0.02">
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
     </xacro:inertial_box>
   </link>
@@ -96,7 +96,7 @@
     <child link="wheel_frontr_link"/>
     <axis xyz="0 0 1"/>
     <!--limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/-->
-    <origin xyz="0.02 0.215 0" rpy="-1.57 0 0"/>
+    <origin xyz="0.02 0.222 0" rpy="-1.57 0 0"/>
   </joint>
   
 
@@ -125,7 +125,7 @@
     <child link="wheel_frontl_link"/>
     <axis xyz="0 0 1"/>
     <!--limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/-->
-    <origin xyz="0.02 -0.215 0" rpy="-1.57 0 0"/>
+    <origin xyz="0.02 -0.208 0" rpy="-1.57 0 0"/>
   </joint>
 
   <!--CASTER WHEEL-->
@@ -148,7 +148,7 @@
         <sphere radius="0.07"/>
       </geometry>
     </collision>
-    <xacro:inertial_sphere mass="0.3" radius="0.07">
+    <xacro:inertial_sphere mass="0.1" radius="0.07">
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
     </xacro:inertial_sphere>
   </link>
@@ -250,7 +250,7 @@
       <wheelTorque>28</wheelTorque>
 
     <!-- Topic to receive geometry_msgs/Twist message commands, defaults to `cmd_vel` -->
-      <commandTopic>turtle1/cmd_vel</commandTopic>
+      <commandTopic>/cmd_vel</commandTopic>
 
     <!-- Topic to publish nav_msgs/Odometry messages, defaults to `odom` -->
       <odometryTopic>odom</odometryTopic>
