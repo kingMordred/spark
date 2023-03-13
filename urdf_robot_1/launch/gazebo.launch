@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<launch>
+
+  <param name="robot_description" command="xacro '$(find urdf_robot)/urdf/rover.urdf.xacro'"/>  
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <!--arg name="world_name" value="$(find urdf_robot)/worlds/test.world"/-->
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+        
+    </include>
+    
+    <node name="spawning_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model urdf_robot -param robot_description"/>
+    <!--IMU_SENSOR-->
+  <!--node pkg="tf" type="static_transform_publisher" name="imu_broadcaster" args="0 0.06 0.02 0 0 0 base_link imu 30" /-->
+  
+  <!-- estimate pose and navgoal -->
+   <node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
+  </node>   
+
+
+  <!-- Map File -->
+  <arg name="map_file" default="$(find localization_data_pub)/maps/3rd_floor_map.yaml"/>
+  <arg name="odom_frame_id" default="odom"/>
+  <arg name="global_frame_id" default="map"/>
+	
+  <!-- Map Server -->
+  <!-- Publish: /map, /map_metadata -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
+	
+  <!-- Add AMCL example for differential drive robots for Localization -->
+  <!-- Subscribe: /scan, /tf, /initialpose, /map -->
+  <!-- Publish: /amcl_pose, /particlecloud, /tf -->
+  <include file="$(find amcl)/examples/amcl_diff.launch"/>
+	
+  <!-- Move Base Node -->
+  <!-- Subscribe: /move_base_simple/goal -->
+  <!-- Publish: /cmd_vel -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <!--<param name="base_global_planner" value="/move_base/NavfnROS/plan"/>-->
+    <rosparam file="$(find navstack_pub)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find navstack_pub)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find navstack_pub)/param/local_costmap_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find navstack_pub)/param/global_costmap_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find navstack_pub)/param/base_local_planner_params.yaml" command="load" />
+  </node>
+<param name="/move_base/NavfnROS/plan/global_frame_id" value="$(arg odom_frame_id)"/>
+
+</launch>
