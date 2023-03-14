@@ -96,7 +96,7 @@
     <child link="wheel_frontr_link"/>
     <axis xyz="0 0 1"/>
     <!--limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/-->
-    <origin xyz="0.02 0.222 0" rpy="-1.57 0 0"/>
+    <origin xyz="0.02 0.222 0" rpy="1.57 0 0"/>
   </joint>
   
 
@@ -125,7 +125,7 @@
     <child link="wheel_frontl_link"/>
     <axis xyz="0 0 1"/>
     <!--limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/-->
-    <origin xyz="0.02 -0.208 0" rpy="-1.57 0 0"/>
+    <origin xyz="0.02 -0.208 0" rpy="1.57 0 0"/>
   </joint>
 
   <!--CASTER WHEEL-->
@@ -258,7 +258,7 @@
       <wheelTorque>28</wheelTorque>
 
     <!-- Topic to receive geometry_msgs/Twist message commands, defaults to `cmd_vel` -->
-      <commandTopic>/cmd_vel</commandTopic>
+      <commandTopic>turtle1/cmd_vel</commandTopic>
 
     <!-- Topic to publish nav_msgs/Odometry messages, defaults to `odom` -->
       <odometryTopic>odom</odometryTopic>
@@ -346,7 +346,7 @@
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
+        <topicName>imu_data</topicName>
         <bodyName>imu_link</bodyName>
         <updateRateHZ>10.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
