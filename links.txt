@@ -1,3 +1,14 @@
 https://www.youtube.com/watch?v=CwdbsvcpOHM&list=PLunhqkrRNRhYYCaSTVP-qJnyUPkTxJnBt
 https://www.youtube.com/watch?v=eJZXRncGaGM
 https://www.youtube.com/watch?v=jkoGkAd0GYk
+
+
+https://www.youtube.com/watch?v=-PCuDnpgiew
+http://wiki.ros.org/navigation/Tutorials/RobotSetup
+http://wiki.ros.org/navigation/Tutorials/RobotSetup/Sensors
+http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom
+http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
+http://wiki.ros.org/navigation/MapBuilding
+http://wiki.ros.org/navigation/RobotsUsingNavStack
+http://wiki.ros.org/navigation/Tutorials/Using%20rviz%20with%20the%20Navigation%20Stack
+http://wiki.ros.org/navigation/Tutorials/SendingSimpleGoals
