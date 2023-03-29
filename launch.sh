@@ -1,8 +1,7 @@
 #!/bin/bash
 title1="launch_file"
-title2="control node"
-title3="vc node"
-title4="arduino serial"
+title2="vel_trans"
+title3="arduino serial"
 
 cmd1="source devel/setup.bash;roslaunch navstack_pub spark.launch"
 cmd3="source devel/setup.bash;rosrun vel_trans translate.py"
