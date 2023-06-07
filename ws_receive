@@ -1,0 +1,54 @@
+import asyncio
+import websockets
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+async def receive_video():
+    uri = "ws://localhost:8000"
+    async with websockets.connect(uri) as websocket:
+        while True:
+            # Receive frame data from the transmitter
+            data = await websocket.recv()
+            if not data:
+                break
+
+            # Convert the frame data back to an image
+            nparr = np.frombuffer(data, np.uint8)
+            frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+            # Display the received frame
+            cv2.imshow('Receiver', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        cv2.destroyAllWindows()
+
+asyncio.get_event_loop().run_until_complete(receive_video())
+import asyncio
+import websockets
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+async def receive_video():
+    uri = "ws://localhost:8000"
+    async with websockets.connect(uri) as websocket:
+        while True:
+            # Receive frame data from the transmitter
+            data = await websocket.recv()
+            if not data:
+                break
+
+            # Convert the frame data back to an image
+            nparr = np.frombuffer(data, np.uint8)
+            frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+            # Display the received frame
+            cv2.imshow('Receiver', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        cv2.destroyAllWindows()
+
+asyncio.get_event_loop().run_until_complete(receive_video())
