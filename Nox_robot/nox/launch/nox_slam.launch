@@ -1,5 +1,9 @@
 <launch>
-	<include file="$(find nox)/launch/nox_navigation.launch" />
+	<!--include file="$(find nox)/launch/nox_navigation.launch" /-->
+
+	<include file="$(find nox)/launch/move_base.launch"/>
+	
+
 
 					<!--  ************** gmapping ***************  -->
 	<node name="slam_gmapping" pkg="gmapping" type="slam_gmapping" output="screen"/>

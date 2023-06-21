@@ -6,7 +6,7 @@
 #include <cmath>
 
 double radius = 0.05;                              //Wheel radius, in m
-double wheelbase = 0.39;                          //Wheelbase, in m
+double wheelbase = 0.4;                          //Wheelbase, in m
 double two_pi = 6.28319;
 double speed_act_left = 0.0;
 double speed_act_right = 0.0;
@@ -51,10 +51,11 @@ int main(int argc, char** argv){
   double vx = 0.0;
   double vy = 0.0;
   double vth = 0.0;
+  char base_footprint[] = "/base_footprint";
   char base_link[] = "/base_link";
   char odom[] = "/odom";
-  char kinect[] = "/kinect";
-  char camera_link[] = "/camera_link";
+  char laser[] = "/laser";
+  //char camera_link[] = "/camera_link";
   ros::Duration d(1.0);
   nh_private_.getParam("publish_rate", rate);
   nh_private_.getParam("publish_tf", publish_tf);
@@ -64,10 +65,15 @@ int main(int argc, char** argv){
   nh_private_.getParam("angular_scale_negative", angular_scale_negative);
 
   ros::Rate r(rate);
+
+  ros::Time current_time;
+ ros::Time last_time;
+  current_time= ros::Time::now();
+  last_time= ros::Time::now();
   while(n.ok()){
     ros::spinOnce();
-    current_time = speed_time;
-    dt = speed_dt;					//Time in s
+    current_time = ros::Time::now();
+    dt = (current_time-last_time).toSec();					//Time in s
     ROS_INFO("dt : %f", dt);
     dxy = (speed_act_left+speed_act_right)*dt/2;
     ROS_INFO("dxy : %f", dxy);
@@ -96,22 +102,22 @@ int main(int argc, char** argv){
       geometry_msgs::TransformStamped k;
       
       t.header.frame_id = odom;
-      t.child_frame_id = base_link;
+      t.child_frame_id = base_footprint;
       t.transform.translation.x = x_pos;
       t.transform.translation.y = y_pos;
       t.transform.translation.z = 0.0;
       t.transform.rotation = odom_quat;
       t.header.stamp = current_time;
       
-      /*k.header.frame_id = kinect;
-      k.child_frame_id = camera_link;
+      k.header.frame_id = base_link;
+      k.child_frame_id = laser;
       k.transform.translation.x = 0.0;
       k.transform.translation.y = 0.0;
-      k.transform.translation.z = 0.0;
+      k.transform.translation.z = 0.65;
       k.transform.rotation = empty_quat;
-      k.header.stamp = current_time;*/
+      k.header.stamp = current_time;
 
-      broadcaster.sendTransform(t);
+      //broadcaster.sendTransform(t);
       //broadcaster.sendTransform(k);
     }
 
@@ -156,7 +162,7 @@ int main(int argc, char** argv){
     }
     vx = (dt == 0)?  0 : (speed_act_left+speed_act_right)/2;
     vth = (dt == 0)? 0 : (speed_act_right-speed_act_left)/wheelbase;
-    odom_msg.child_frame_id = base_link;
+    odom_msg.child_frame_id = base_footprint;
     odom_msg.twist.twist.linear.x = vx;
     odom_msg.twist.twist.linear.y = 0.0;
     odom_msg.twist.twist.angular.z = dth;

@@ -1,6 +1,6 @@
 TrajectoryPlannerROS:
   # for details see: http://www.ros.org/wiki/base_local_planner
-  odom_topic: odom
+  odom_topic: robot_pose_ekf/odom_combined
   
   max_vel_x: 0.3
   min_vel_x: 0.05
