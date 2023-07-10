@@ -24,5 +24,5 @@ gnome-terminal --tab --title="$title1" --command="bash -c '$cmd1; $SHELL'" \
                --tab --title="$title5" --command="bash -c '$cmd6; $SHELL'" \
                --tab --title="$title7" --command="bash -c '$cmd7; $SHELL'"
 
-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
+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
                
